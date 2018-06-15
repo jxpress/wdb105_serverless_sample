@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  dynamodb:
+    build:
+      context: .
+      dockerfile: Dockerfile.dynamodb
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    links:
+      - dynamodb
+    environment:
+      - DYNAMODB_ENDPOINT_URL: http://dynamodb:8000

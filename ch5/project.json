@@ -1,0 +1,7 @@
+{
+  "name": "プロジェクト名",
+  "description": "",
+  "role": "arn:aws:iam::XXXXXX:role/serverless_lambda_function",
+  "memory": 128,
+  "runtime": "python3.6"
+}
