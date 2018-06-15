@@ -1,0 +1,5 @@
+FROM python:3-slim
+
+WORKDIR /code
+
+RUN pip install pytest boto3

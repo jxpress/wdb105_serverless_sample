@@ -1,0 +1,43 @@
+version: 2
+
+jobs:
+  test:
+    docker:
+      - image: username/reponame:test
+        auth:
+          username: username
+          password: $DOCKERHUB_PASSWORD
+      - image: username/reponame:dynamodb
+        name: dynamodb
+        auth:
+          username: username
+          password: $DOCKERHUB_PASSWORD
+    working_directory: /code
+    environment:
+      AWS_DEFAULT_REGION: ap-northeast-1
+      AWS_ACCESS_KEY_ID: dummy
+      AWS_SECRET_ACCESS_KEY: dummy
+      DYNAMODB_ENDPOINT_URL: http://dynamodb:8000
+    steps:
+      - checkout
+      - run: test.py
+
+  deploy:
+    docker:
+      - image: username/reponame:deploy
+        auth:
+          username: username
+          password: $DOCKERHUB_PASSWORD
+    working_directory: /code
+    steps:
+      - checkout
+      - run: apex deploy -r $AWS_DEFAULT_REGION
+      - run: apex infra init -force-copy
+      - run: apex infra apply -auto-approve
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test
+      - deploy
