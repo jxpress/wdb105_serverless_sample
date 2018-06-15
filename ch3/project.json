@@ -1,0 +1,13 @@
+{
+  "name": "serverless_wsgi",
+  "description": "serverless wsgi",
+  "memory": 128,
+  "timeout": 5,
+  "role": "arn:aws:iam::XXXXXXXXX:role/serverless_wsgi_lambda_function",
+  "environment": {},
+  "runtime": "python3.6",
+  "handler": "main.lambda_handler",
+  "hooks": {
+    "build": "cp -r ../../src/* . && pip install -r ../../requirements.txt -t ./vendor"
+  }
+}
